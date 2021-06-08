@@ -5,7 +5,8 @@
     },
     "extends": [
         "plugin:react/recommended",
-        "airbnb"
+        "airbnb",
+        "prettier"
     ],
     "parserOptions": {
         "ecmaFeatures": {
@@ -34,6 +35,7 @@
         "no-param-reassign": ["off"],
         "jsx-a11y/anchor-is-valid": "off",
         "jsx-a11y/no-onchange": "off",
-        "radix": ["error", "as-needed"]
+        "radix": ["error", "as-needed"],
+        "arrow-body-style": "off"
     }
 }
