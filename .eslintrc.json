@@ -4,8 +4,9 @@
         "es2021": true
     },
     "extends": [
-        "plugin:react/recommended",
         "airbnb",
+        "plugin:react/recommended",
+        "plugin:jest/recommended",
         "prettier"
     ],
     "parserOptions": {
@@ -15,12 +16,8 @@
         "ecmaVersion": 12,
         "sourceType": "module"
     },
-    "plugins": [
-        "react"
-    ],
+    "plugins": ["react", "jest"],
     "rules": {
-        "prettier/prettier": "error",
-        "@typescript-eslint/indent": "off",
         "react/static-property-placement": ["warn", "static public field"],
         "react/destructuring-assignment": "off",
         "react/jsx-props-no-spreading": "off",

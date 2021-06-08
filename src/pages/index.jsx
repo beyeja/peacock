@@ -1,6 +1,12 @@
 import React from 'react';
 import Head from 'next/head';
-import AudioPlayer from '../components/audio-player';
+import dynamic from 'next/dynamic'
+
+
+const AudioPlayerWithoutSSR = dynamic(
+	() => import('../components/AudioPlayer'),
+	{ ssr: false }
+)
 
 export default function Home() {
   return (
@@ -16,7 +22,7 @@ export default function Home() {
           SoundShare
         </h1>
 
-        <AudioPlayer />
+        <AudioPlayerWithoutSSR />
       </main>
 
       <footer className="w-full h-24 border-t border-gray-200 flex flex-col justify-center items-center">
