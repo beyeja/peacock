@@ -1,40 +1,56 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/router';
+import cx from 'classnames';
 import AudioControls from './AudioControls';
 import Backdrop from './Backdrop';
+import styles from './RangeSlider.module.css';
+
 
 const audioSample = '/trust-yourself-arnold-schwarzenegger.mp3';
+
+export const getLocationOnProgressBar = (duration, progressTime) => {
+	return duration ? (progressTime / duration) * 100 : 0;
+}
 
 const AudioPlayer = () => {
 	// State
 	const [trackProgress, setTrackProgress] = useState(0);
+	// autoplay without mute and user interaction is not allowed by modern browsers
 	const [isPlaying, setIsPlaying] = useState(false);
+	const [startedAutomatically, setStartedAutomatically] = useState(true);
 
 	// Refs
-	const audioRef = useRef(new Audio(audioSample));
-	const intervalRef = useRef();
+	const audio = new Audio(audioSample);
+	const audioRef = useRef(audio);
+	const updateIntervalRef = useRef();
 	const isReady = useRef(false);
+
+	const { query: params } = useRouter();
+	const startTime = params.t;
+	const stopTime = params.s; 
 
 	// Destructure for conciseness
 	const { duration } = audioRef.current;
 
-	const currentPercentage = duration ? `${(trackProgress / duration) * 100}%` : '0%';
+	const currentPercentage = getLocationOnProgressBar(duration, trackProgress);
 	const trackStyling = `
-		-webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(${currentPercentage}, #fff), color-stop(${currentPercentage}, #777))
+		-webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(${currentPercentage}%, #fff), color-stop(${currentPercentage}%, #777))
 	`;
-
 	// timer to autoplay next track and update progress bar
-	const startTimer = () => {
+	const startUpdateInterval = () => {
 		// Clear any timers already running
-		clearInterval(intervalRef.current);
+		clearInterval(updateIntervalRef.current);
 
-		intervalRef.current = setInterval(() => {
+		updateIntervalRef.current = setInterval(() => {
 			setTrackProgress(audioRef.current.currentTime);
-		}, [1000]);
+			if (/*startedAutomatically &&*/ stopTime && audioRef.current.currentTime >= stopTime )
+				setIsPlaying(false);
+		}, [500]);
 	};
 
 	const onScrub = (value) => {
 		// Clear any timers already running
-		clearInterval(intervalRef.current);
+		clearInterval(updateIntervalRef.current);
 		audioRef.current.currentTime = value;
 		setTrackProgress(audioRef.current.currentTime);
 	};
@@ -44,14 +60,16 @@ const AudioPlayer = () => {
 		if (!isPlaying) {
 			setIsPlaying(true);
 		}
-		startTimer();
+		startUpdateInterval();
+		setStartedAutomatically(false);
 	};
 
 	// play state change
 	useEffect(() => {
 		if (isPlaying) {
 			audioRef.current.play();
-			startTimer();
+			startUpdateInterval();
+			setStartedAutomatically(false);
 		} else {
 			audioRef.current.pause();
 		}
@@ -59,10 +77,18 @@ const AudioPlayer = () => {
 
 	// only on init
 	useEffect(() => {
+		if (startTime) {
+			audioRef.current.currentTime = startTime;
+			setStartedAutomatically(true);
+		}
+
+		setTrackProgress(startTime);	
+		startUpdateInterval();
+		
 		// Pause and clean up on unmount
 		return () => {
 			audioRef.current.pause();
-			clearInterval(intervalRef.current);
+			clearInterval(updateIntervalRef.current);
 		};
 	}, []);
 
@@ -75,10 +101,14 @@ const AudioPlayer = () => {
 				<input
 					type='range'
 					value={trackProgress}
-					step='1'
+					step='0.25'
 					min='0'
-					max={duration || `${duration}`}
-					className='progress'
+					max={duration || 100}
+					className={cx(
+							styles.slider,
+							"w-full h-8 outline-none bg-gray-300 opacity-30", 
+							"hover:opacity-100"
+					)}
 					onChange={(e) => onScrub(e.target.value)}
 					onMouseUp={onScrubEnd}
 					onKeyUp={onScrubEnd}

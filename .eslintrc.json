@@ -6,7 +6,6 @@
     "extends": [
         "airbnb",
         "plugin:react/recommended",
-        "plugin:jest/recommended",
         "prettier"
     ],
     "parserOptions": {
@@ -16,7 +15,7 @@
         "ecmaVersion": 12,
         "sourceType": "module"
     },
-    "plugins": ["react", "jest"],
+    "plugins": ["react"],
     "rules": {
         "react/static-property-placement": ["warn", "static public field"],
         "react/destructuring-assignment": "off",

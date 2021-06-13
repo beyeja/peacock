@@ -2,7 +2,7 @@ import React from 'react';
 import Head from 'next/head';
 import dynamic from 'next/dynamic'
 
-
+// load audio player lazily only on client side execution
 const AudioPlayerWithoutSSR = dynamic(
 	() => import('../components/AudioPlayer'),
 	{ ssr: false }
@@ -22,11 +22,13 @@ export default function Home() {
           SoundShare
         </h1>
 
-        <AudioPlayerWithoutSSR />
+        <div className="self-stretch px-10">
+          <AudioPlayerWithoutSSR />
+        </div>
       </main>
 
       <footer className="w-full h-24 border-t border-gray-200 flex flex-col justify-center items-center">
-        ME & JB
+        the bois
       </footer>
     </div>
   );
