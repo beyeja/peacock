@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import cx from 'classnames';
+import randomColor from 'randomcolor';
 import AudioControls from './AudioControls';
 import Backdrop from './Backdrop';
 import styles from './RangeSlider.module.css';
@@ -18,12 +19,12 @@ const AudioPlayer = () => {
 	// autoplay without mute and user interaction is not allowed by modern browsers
 	const [isPlaying, setIsPlaying] = useState(false);
 	const [startedAutomatically, setStartedAutomatically] = useState(true);
-
+	const [color] = useState(randomColor({luminosity: 'light'}));
 	// Refs
 	const audio = new Audio(audioSample);
 	const audioRef = useRef(audio);
 	const updateIntervalRef = useRef();
-	const isReady = useRef(false);
+	// const isReady = useRef(false);
 
 	const { query: params } = useRouter();
 	const startTime = params.t;
@@ -98,24 +99,24 @@ const AudioPlayer = () => {
 				{/* <h2 className="title">{title}</h2>
 				<h3 className="artist">{artist}</h3> */}
 				<AudioControls isPlaying={isPlaying} onPlayPauseClick={setIsPlaying} />
-				<input
-					type='range'
-					value={trackProgress}
-					step='0.25'
-					min='0'
-					max={duration || 100}
-					className={cx(
-							styles.slider,
-							"w-full h-8 outline-none bg-gray-300 opacity-30", 
-							"hover:opacity-100"
-					)}
-					onChange={(e) => onScrub(e.target.value)}
-					onMouseUp={onScrubEnd}
-					onKeyUp={onScrubEnd}
-					style={{ background: trackStyling }}
-				/>
+				<div className={cx(styles.slider_container)}>
+					<input
+						type='range'
+						value={trackProgress}
+						step='0.25'
+						min='0'
+						max={duration || 100}
+						className={cx(
+							styles.slider
+						)}
+						onChange={(e) => onScrub(e.target.value)}
+						onMouseUp={onScrubEnd}
+						onKeyUp={onScrubEnd}
+					/>
+				</div>
 			</div>
-			<Backdrop activeColor='#5f9fff' isPlaying={isPlaying} />
+
+			<Backdrop activeColor={color} isPlaying={isPlaying} />
 		</div>
 	);
 };

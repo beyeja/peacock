@@ -1,6 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import dynamic from 'next/dynamic'
+import Link from 'next/link';
 
 // load audio player lazily only on client side execution
 const AudioPlayerWithoutSSR = dynamic(
@@ -22,9 +23,11 @@ export default function Home() {
           SoundShare
         </h1>
 
-        <div className="self-stretch px-10">
-          <AudioPlayerWithoutSSR />
-        </div>
+        <Link href="/1">
+            <a>
+              Lets go
+            </a>
+        </Link>
       </main>
 
       <footer className="w-full h-24 border-t border-gray-200 flex flex-col justify-center items-center">
