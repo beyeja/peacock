@@ -6,13 +6,11 @@ import AudioControls from './AudioControls';
 import Backdrop from './Backdrop';
 import RangeSlider from './RangeSlider';
 
-const audioSample = '/trust-yourself-arnold-schwarzenegger.mp3';
-
 export const getLocationOnProgressBar = (duration: number, progressTime: number) => {
     return duration ? (progressTime / duration) * 100 : 0;
 };
 
-const AudioPlayer = () => {
+const AudioPlayer = ({ audioClip }: { audioClip: string }) => {
     // State
     const [trackProgress, setTrackProgress] = useState(0);
     // autoplay without mute and user interaction is not allowed by modern browsers
@@ -20,7 +18,7 @@ const AudioPlayer = () => {
     const [startedAutomatically, setStartedAutomatically] = useState(true);
     const [color] = useState(randomColor({ luminosity: 'light' }));
     // Refs
-    const audio = new Audio(audioSample);
+    const audio = new Audio(audioClip);
     const audioRef = useRef(audio);
     const updateIntervalRef = useRef();
     // const isReady = useRef(false);
@@ -43,7 +41,10 @@ const AudioPlayer = () => {
 
         updateIntervalRef.current = setInterval(() => {
             setTrackProgress(audioRef.current.currentTime);
-            if (/*startedAutomatically &&*/ stopTime && audioRef.current.currentTime >= stopTime)
+            if (
+                /*startedAutomatically &&*/ stopTime &&
+                audioRef.current.currentTime >= stopTime
+            )
                 setIsPlaying(false);
         }, [500]);
     };
@@ -101,7 +102,6 @@ const AudioPlayer = () => {
                 onScrubEnd={onScrubEnd}
                 onChange={(e) => onScrub(e?.target?.value)}
             />
-
             <Backdrop activeColor={color} isPlaying={isPlaying} />
         </div>
     );
