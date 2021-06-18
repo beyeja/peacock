@@ -96,6 +96,9 @@ const AudioPlayer = ({ audioClip }: { audioClip: string }) => {
     return (
         <div>
             <AudioControls isPlaying={isPlaying} onPlayPauseClick={setIsPlaying} />
+            <div className="text-sm inline-block leading-4 ml-1">
+                {audioClip.substr(audioClip.lastIndexOf("/") + 1, audioClip.lastIndexOf(".") - 2)}
+            </div>
             <RangeSlider
                 duration={duration}
                 trackProgress={trackProgress}

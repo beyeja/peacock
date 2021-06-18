@@ -1,5 +1,5 @@
 import React from 'react';
-// import { ReactComponent as Play } from '../assets/play.svg';
+// import playIcon from '../../public/assets/iconmonstr-play-thin.svg';
 // import { ReactComponent as Pause } from '../assets/pause.svg';
 
 export type AudioControlsProps = {
@@ -8,14 +8,16 @@ export type AudioControlsProps = {
 };
 
 const AudioControls = ({ isPlaying, onPlayPauseClick }: AudioControlsProps) => (
-    <div className='audio-controls'>
+    <div className='inline-block'>
         {isPlaying ? (
-            <button type='button' className='pause' onClick={() => onPlayPauseClick(false)}>
-                "Pause"
+            // 'Pause'
+            <button type='button' className='w-3 focus:outline-none' onClick={() => onPlayPauseClick(false)}>
+                <img className='' style={{height: 10}} src={'./pause.svg'} alt='hey' />
             </button>
         ) : (
-            <button type='button' className='play' onClick={() => onPlayPauseClick(true)}>
-                "Play"
+            // "Play"
+            <button type='button' className='w-3 focus:outline-none' onClick={() => onPlayPauseClick(true)}>
+                <img className='' style={{height: 10}} src={'./play.svg'} alt='hey' />
             </button>
         )}
     </div>
