@@ -10,7 +10,8 @@
 .pnp.*
 
 # IDE
-/.vscode
+/.vscode/*
+!.vscode/settings.json.sample
 
 # dependencies
 /node_modules

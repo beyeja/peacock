@@ -1,0 +1,13 @@
+{
+    "css.validate": false, // Disable css built-in lint
+    "stylelint.enable": true, // Enable sytlelint
+    "eslint.alwaysShowStatus": true,
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": true,
+        "source.vs.stylelint": true
+    },
+    "git.ignoreLimitWarning": true,
+    "workbench.colorTheme": "Atom One Dark"
+}
