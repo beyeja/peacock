@@ -10,7 +10,13 @@ export const getLocationOnProgressBar = (duration: number, progressTime: number)
     return duration ? (progressTime / duration) * 100 : 0;
 };
 
-const AudioPlayer = ({ audioClip }: { audioClip: string }) => {
+const AudioPlayer = ({
+    audioClip,
+    comments,
+}: {
+    audioClip: string;
+    comments: any[] | undefined;
+}) => {
     // State
     const [trackProgress, setTrackProgress] = useState(0);
     // autoplay without mute and user interaction is not allowed by modern browsers
@@ -96,14 +102,18 @@ const AudioPlayer = ({ audioClip }: { audioClip: string }) => {
     return (
         <div>
             <AudioControls isPlaying={isPlaying} onPlayPauseClick={setIsPlaying} />
-            <div className="text-sm inline-block leading-4 ml-1">
-                {audioClip.substr(audioClip.lastIndexOf("/") + 1, audioClip.lastIndexOf(".") - 2)}
+            <div className='text-sm inline-block leading-4 ml-1'>
+                {audioClip.substr(
+                    audioClip.lastIndexOf('/') + 1,
+                    audioClip.lastIndexOf('.') - 2
+                )}
             </div>
             <RangeSlider
                 duration={duration}
                 trackProgress={trackProgress}
                 onScrubEnd={onScrubEnd}
                 onChange={(e) => onScrub(e?.target?.value)}
+                comments={comments}
             />
             <Backdrop activeColor={color} isPlaying={isPlaying} />
         </div>

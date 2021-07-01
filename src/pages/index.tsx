@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Page from 'src/components/Page';
+import FileUpload from 'src/components/FileUpload';
 
 export default function Home() {
     return (
@@ -14,6 +15,9 @@ export default function Home() {
             <Link href='/3'>
                 <a className='hover:underline'>sound 3</a>
             </Link>
+            <div className="mt-4">
+                <FileUpload redirectOnSuccess/>
+            </div>
         </Page>
     );
 }

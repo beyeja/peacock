@@ -9,6 +9,7 @@ export type RangeSliderProps = {
     trackProgress?: number;
     onScrubEnd: (event: any) => void;
     onChange: (event: any) => void;
+    comments: any[] | undefined;
 };
 
 const RangeSlider = ({
@@ -16,6 +17,7 @@ const RangeSlider = ({
     trackProgress,
     onScrubEnd,
     onChange,
+    comments,
 }: RangeSliderProps) => {
     const rangeRef = createRef<HTMLInputElement>();
 
@@ -36,12 +38,12 @@ const RangeSlider = ({
                 onMouseUp={onScrubEnd}
                 onKeyUp={onScrubEnd}
             />
-            <Comment
-                text='hey this part is awesome'
-                position={{ x: '25%', y: sliderHeight }}
-            />
-            <Comment text='Sheeeeeeeeeeeesh' position={{ x: '34%', y: sliderHeight }} />
-            <Comment text='listen to this' position={{ x: '66%', y: sliderHeight }} />
+            {comments?.map((comment) => (
+                <Comment
+                    text={comment.text}
+                    position={{ x: comment.atPos, y: sliderHeight }}
+                />
+            ))}
         </div>
     );
 };
