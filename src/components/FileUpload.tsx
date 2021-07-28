@@ -7,9 +7,9 @@ export default function FileUpload({
     redirectOnSuccess?: boolean;
 }) {
     const uploadFile = (file: File) => {
-        if (!process.env.NEXT_PUBLIC_SQUIRREL_URL) return;
+        if (!process.env.NEXT_PUBLIC_BACKEND_URL) return;
 
-        fetch(process.env.NEXT_PUBLIC_SQUIRREL_URL, {
+        fetch(process.env.NEXT_PUBLIC_BACKEND_URL, {
             method: 'POST',
             body: file,
         })

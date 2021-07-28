@@ -5,17 +5,18 @@ import randomColor from 'randomcolor';
 import AudioControls from './AudioControls';
 import Backdrop from './Backdrop';
 import RangeSlider from './RangeSlider';
+import { CommentType } from 'src/model/ShareType';
 
 export const getLocationOnProgressBar = (duration: number, progressTime: number) => {
     return duration ? (progressTime / duration) * 100 : 0;
 };
 
 const AudioPlayer = ({
-    audioClip,
+    audioPath,
     comments,
 }: {
-    audioClip: string;
-    comments: any[] | undefined;
+    audioPath: string;
+    comments: CommentType[] | undefined;
 }) => {
     // State
     const [trackProgress, setTrackProgress] = useState(0);
@@ -24,7 +25,7 @@ const AudioPlayer = ({
     const [startedAutomatically, setStartedAutomatically] = useState(true);
     const [color] = useState(randomColor({ luminosity: 'light' }));
     // Refs
-    const audio = new Audio(audioClip);
+    const audio = new Audio(audioPath);
     const audioRef = useRef(audio);
     const updateIntervalRef = useRef();
     // const isReady = useRef(false);
@@ -45,17 +46,17 @@ const AudioPlayer = ({
         // Clear any timers already running
         clearInterval(updateIntervalRef.current);
 
-        updateIntervalRef.current = setInterval(() => {
-            setTrackProgress(audioRef.current.currentTime);
-            if (
-                /*startedAutomatically &&*/ stopTime &&
-                audioRef.current.currentTime >= stopTime
-            )
-                setIsPlaying(false);
-        }, [500]);
+        // updateIntervalRef.current = setInterval(() => {
+        //     setTrackProgress(audioRef.current.currentTime);
+        //     if (
+        //         /*startedAutomatically &&*/ stopTime &&
+        //         audioRef.current.currentTime >= stopTime
+        //     )
+        //         setIsPlaying(false);
+        // }, [500]);
     };
 
-    const onScrub = (value) => {
+    const onScrub = (value: any) => {
         // Clear any timers already running
         clearInterval(updateIntervalRef.current);
         audioRef.current.currentTime = value;
@@ -103,9 +104,9 @@ const AudioPlayer = ({
         <div>
             <AudioControls isPlaying={isPlaying} onPlayPauseClick={setIsPlaying} />
             <div className='text-sm inline-block leading-4 ml-1'>
-                {audioClip.substr(
-                    audioClip.lastIndexOf('/') + 1,
-                    audioClip.lastIndexOf('.') - 2
+                {audioPath.substr(
+                    audioPath.lastIndexOf('/') + 1,
+                    audioPath.lastIndexOf('.') - 2
                 )}
             </div>
             <RangeSlider

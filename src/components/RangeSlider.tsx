@@ -3,13 +3,14 @@ import cx from 'classnames';
 import Comment from './Comment';
 import { useEffect, createRef } from 'react';
 import styles from './RangeSlider.module.css';
+import { CommentType } from '../model/ShareType';
 
 export type RangeSliderProps = {
     duration: number;
     trackProgress?: number;
     onScrubEnd: (event: any) => void;
     onChange: (event: any) => void;
-    comments: any[] | undefined;
+    comments: CommentType[] | undefined;
 };
 
 const RangeSlider = ({
@@ -41,7 +42,7 @@ const RangeSlider = ({
             {comments?.map((comment) => (
                 <Comment
                     text={comment.text}
-                    position={{ x: comment.atPos, y: sliderHeight }}
+                    position={{ x: comment.atPos + '%', y: sliderHeight }}
                 />
             ))}
         </div>
