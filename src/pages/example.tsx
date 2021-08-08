@@ -25,7 +25,7 @@ export const shareMock: ShareType = {
         {
             id: '4713',
             filename: 'Sub Urban - Cradles [NCS Release]',
-            path: 'Sub Urban - Cradles [NCS Release].mp3',
+            path: 'Sub-Urban--Cradles.mp3',
             comments: [
                 {
                     text: 'hey this part is awesome',
