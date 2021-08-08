@@ -2,13 +2,12 @@ import React from 'react';
 import Head from 'next/head';
 import cx from 'classnames';
 
-const Page = ({
-    children,
-    theme = 'black',
-}: {
+export type PageProps = {
     children: React.ReactNode;
     theme?: 'black' | 'white';
-}) => {
+};
+
+const Page = ({ children, theme = 'black' }: PageProps) => {
     return (
         <div
             className={

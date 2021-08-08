@@ -17,7 +17,7 @@ const Comment = ({ text, position, expand }: CommentProps) => {
                 left: position.x,
             }}
         >
-            <div className={cx('absolute', styles.comment_arrow_left)}></div>
+            <div className={cx('absolute', styles.comment_arrow_left)} />
             <div className={cx('inline  ml-5', styles.comment)}>{text}</div>
         </div>
     );

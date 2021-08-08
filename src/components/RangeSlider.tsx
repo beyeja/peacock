@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import cx from 'classnames';
 import Comment from './Comment';
-import { useEffect, createRef } from 'react';
+
 import styles from './RangeSlider.module.css';
 import { CommentType } from '../model/ShareAPIType';
 
@@ -41,9 +41,10 @@ const RangeSlider = ({
             {comments &&
                 comments?.map((comment, i) => (
                     <Comment
+                        // eslint-disable-next-line react/no-array-index-key
                         key={`comment-${i}-${comment.atPos}`}
                         text={comment.text}
-                        position={{ x: comment.atPos + '%', y: SLIDER_HEIGHT }}
+                        position={{ x: `${comment.atPos}%`, y: SLIDER_HEIGHT }}
                     />
                 ))}
         </div>

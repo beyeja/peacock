@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import router from 'next/router';
 import React from 'react';
 import { ShareType } from 'src/model/ShareAPIType';
@@ -24,7 +25,7 @@ const FileUpload = ({ redirectOnSuccess = false }: FileUploadProps) => {
     const uploadFile = (file: File) => {
         if (!backendPath) return;
 
-        var data = new FormData();
+        const data = new FormData();
         data.append('file', file);
         post('/', data);
     };

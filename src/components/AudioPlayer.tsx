@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
-import cx from 'classnames';
 import randomColor from 'randomcolor';
+import { CommentType } from 'src/model/ShareAPIType';
 import AudioControls from './AudioControls';
 import Backdrop from './Backdrop';
 import RangeSlider from './RangeSlider';
-import { CommentType } from 'src/model/ShareAPIType';
 
 export const getLocationOnProgressBar = (duration: number, progressTime: number) => {
     return duration ? (progressTime / duration) * 100 : 0;

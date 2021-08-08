@@ -1,11 +1,12 @@
+/* eslint-disable no-console */
 import React, { useEffect } from 'react';
 import dynamic from 'next/dynamic';
-import Page from '../components/Page';
-import PagePlayerContainer from '../components/PagePlayerContainer';
 import useFetch from 'use-http';
 import { useRouter } from 'next/router';
 import { ShareType } from 'src/model/ShareAPIType';
 import { getEnvBackendBasePath, getEnvFileBasePath } from 'src/utils/envUtils';
+import PagePlayerContainer from '../components/PagePlayerContainer';
+import Page from '../components/Page';
 
 // load audio player lazily only on client side execution
 const AudioPlayerWithoutSSR = dynamic(() => import('../components/AudioPlayer'), {

@@ -14,7 +14,7 @@ const AudioControls = ({ isPlaying, onPlayPauseClick }: AudioControlsProps) => (
                 className='w-3 focus:outline-none'
                 onClick={() => onPlayPauseClick(false)}
             >
-                <img className='' style={{ height: 10 }} src={'./pause.svg'} alt='hey' />
+                <img className='' style={{ height: 10 }} src='./pause.svg' alt='hey' />
             </button>
         ) : (
             // "Play"
@@ -23,7 +23,7 @@ const AudioControls = ({ isPlaying, onPlayPauseClick }: AudioControlsProps) => (
                 className='w-3 focus:outline-none'
                 onClick={() => onPlayPauseClick(true)}
             >
-                <img className='' style={{ height: 10 }} src={'./play.svg'} alt='hey' />
+                <img className='' style={{ height: 10 }} src='./play.svg' alt='hey' />
             </button>
         )}
     </div>
