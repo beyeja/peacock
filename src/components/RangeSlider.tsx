@@ -3,15 +3,18 @@ import cx from 'classnames';
 import Comment from './Comment';
 import { useEffect, createRef } from 'react';
 import styles from './RangeSlider.module.css';
-import { CommentType } from '../model/ShareType';
+import { CommentType } from '../model/ShareAPIType';
 
 export type RangeSliderProps = {
     duration: number;
     trackProgress?: number;
     onScrubEnd: (event: any) => void;
     onChange: (event: any) => void;
-    comments: CommentType[] | undefined;
+    comments?: CommentType[] | undefined;
 };
+
+/** defined slider height for comment placement */
+const SLIDER_HEIGHT = 25;
 
 const RangeSlider = ({
     duration,
@@ -21,16 +24,12 @@ const RangeSlider = ({
     comments,
 }: RangeSliderProps) => {
     const rangeRef = createRef<HTMLInputElement>();
-
-    useEffect(() => {});
-    duration = duration || 100;
-    const sliderHeight = 25;
     return (
         <div className={cx(styles.slider_container, 'relative')}>
             <input
                 ref={rangeRef}
                 type='range'
-                value={trackProgress}
+                value={trackProgress || 0}
                 step='0.25'
                 min='0'
                 max={duration || 100}
@@ -39,12 +38,14 @@ const RangeSlider = ({
                 onMouseUp={onScrubEnd}
                 onKeyUp={onScrubEnd}
             />
-            {comments?.map((comment) => (
-                <Comment
-                    text={comment.text}
-                    position={{ x: comment.atPos + '%', y: sliderHeight }}
-                />
-            ))}
+            {comments &&
+                comments?.map((comment, i) => (
+                    <Comment
+                        key={`comment-${i}-${comment.atPos}`}
+                        text={comment.text}
+                        position={{ x: comment.atPos + '%', y: SLIDER_HEIGHT }}
+                    />
+                ))}
         </div>
     );
 };

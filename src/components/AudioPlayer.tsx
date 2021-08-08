@@ -5,19 +5,22 @@ import randomColor from 'randomcolor';
 import AudioControls from './AudioControls';
 import Backdrop from './Backdrop';
 import RangeSlider from './RangeSlider';
-import { CommentType } from 'src/model/ShareType';
+import { CommentType } from 'src/model/ShareAPIType';
 
 export const getLocationOnProgressBar = (duration: number, progressTime: number) => {
     return duration ? (progressTime / duration) * 100 : 0;
 };
 
-const AudioPlayer = ({
-    audioPath,
-    comments,
-}: {
+export type AudioPlayerProps = {
+    // path to audio file
     audioPath: string;
-    comments: CommentType[] | undefined;
-}) => {
+    // title of file when provided by backend. Player uses partial path when not provided.
+    title?: string | undefined;
+    // list of comments to be displayed on audio slider
+    comments?: CommentType[] | undefined;
+};
+
+const AudioPlayer = ({ audioPath, title, comments }: AudioPlayerProps) => {
     // State
     const [trackProgress, setTrackProgress] = useState(0);
     // autoplay without mute and user interaction is not allowed by modern browsers
@@ -104,10 +107,12 @@ const AudioPlayer = ({
         <div>
             <AudioControls isPlaying={isPlaying} onPlayPauseClick={setIsPlaying} />
             <div className='text-sm inline-block leading-4 ml-1'>
-                {audioPath.substr(
-                    audioPath.lastIndexOf('/') + 1,
-                    audioPath.lastIndexOf('.') - 2
-                )}
+                {title ||
+                    audioPath?.substr(
+                        audioPath?.lastIndexOf('/') + 1,
+                        audioPath?.lastIndexOf('.') - 2
+                    ) ||
+                    audioPath}
             </div>
             <RangeSlider
                 duration={duration}

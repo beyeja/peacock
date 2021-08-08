@@ -30,14 +30,17 @@ const Page = ({
                     }
                 )}
             >
-                <h1 className='m-3 text-5xl inline-block mb-4'>SoundShare</h1>
+                <h1 className='m-3 text-5xl inline-block mb-12'>SoundShare</h1>
                 {children}
             </main>
 
             <footer
-                className={cx('w-full h-24 flex flex-col justify-center items-center', {
-                    'text-white': theme === 'white',
-                })}
+                className={cx(
+                    'w-full h-24 flex flex-col justify-center items-center text-xs',
+                    {
+                        'text-white': theme === 'white',
+                    }
+                )}
             >
                 the bois
             </footer>
